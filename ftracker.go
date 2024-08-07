@@ -59,7 +59,7 @@ func ShowTrainingInfo(action int, trainingType string, duration, weight, height 
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	case trainingType == "Плавание":
 		distance := distance(action)                                               // вызовите здесь необходимую функцию
-		speed := SwimmingMeanSpeed(lengthPool, countPool, duration)                // вызовите здесь необходимую функцию
+		speed := swimmingMeanSpeed(lengthPool, countPool, duration)                // вызовите здесь необходимую функцию
 		calories := SwimmingSpentCalories(lengthPool, countPool, duration, weight) // вызовите здесь необходимую функцию
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	default:
@@ -110,14 +110,14 @@ const (
 	swimmingCaloriesWeightMultiplier = 2   // множитель веса при плавании.
 )
 
-// SwimmingMeanSpeed возвращает среднюю скорость при плавании.
+// swimmingMeanSpeed возвращает среднюю скорость при плавании.
 //
 // Параметры:
 //
 // lengthPool int — длина бассейна в метрах.
 // countPool int — сколько раз пользователь переплыл бассейн.
 // duration float64 — длительность тренировки в часах.
-func SwimmingMeanSpeed(lengthPool, countPool int, duration float64) float64 {
+func swimmingMeanSpeed(lengthPool, countPool int, duration float64) float64 {
 	if duration == 0 {
 		return 0
 	}
@@ -134,5 +134,5 @@ func SwimmingMeanSpeed(lengthPool, countPool int, duration float64) float64 {
 // weight float64 — вес пользователя.
 func SwimmingSpentCalories(lengthPool, countPool int, duration, weight float64) float64 {
 	// ваш код здесь
-	return (SwimmingMeanSpeed(lengthPool, countPool, duration) + swimmingCaloriesMeanSpeedShift) * 2 * weight * duration
+	return (swimmingMeanSpeed(lengthPool, countPool, duration) + swimmingCaloriesMeanSpeedShift) * 2 * weight * duration
 }
